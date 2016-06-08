@@ -6,6 +6,7 @@
 
 ## [ Dossiers a ignorer ]
 03_software/3-1_test/
+03_software/*/
 05_*/
 06_*/
 07_*/
