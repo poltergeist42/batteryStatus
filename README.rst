@@ -3,8 +3,7 @@ batteryStatus
 =============
 
    :Autheur:          `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Projet:           myLib
->>>>>>> 5e9b2b9ccd09f8397636af51ce7d45cc665dbe05
+   :Projet:           batteryStatus
    :Licence:          CC BY-NC-SA 4.0
    :Liens:            https://creativecommons.org/licenses/by-nc-sa/4.0/ 
 
