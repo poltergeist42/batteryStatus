@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     batteryStatus.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160623
+   :Version:            20160625
 
 ----
 
@@ -13,6 +13,9 @@
 
 ----
 
+    :dev language:      Python 3.4
+    
+----
 
 lexique
 -------
@@ -89,7 +92,7 @@ def f_printBF() :
 
 def main() :
     # print("dbgMsg : status.BatteryLifePercent : ",status.BatteryLifePercent)
-    if (status.ACLineStatus) and (status.BatteryLifePercent == 100) :
+    if (status.ACLineStatus) and (status.BatteryLifePercent >= 98) :
         f_printBF()
         input("\nappuyer sur entree pour fermer la fenetre")
 
