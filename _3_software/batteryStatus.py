@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     batteryStatus.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160625
+   :Version:            20161205
 
 ----
 
@@ -35,66 +35,75 @@ lexique
 
 # source : http://stackoverflow.com/questions/6153860/in-python-how-can-i-detect-whether-the-computer-is-on-battery-power
 
-import ctypes
-from ctypes import wintypes
 from os import system
+import wmi
 
-class SYSTEM_POWER_STATUS(ctypes.Structure):
-    _fields_ = [
-        ('ACLineStatus', wintypes.BYTE),
-        ('BatteryFlag', wintypes.BYTE),
-        ('BatteryLifePercent', wintypes.BYTE),
-        ('Reserved1', wintypes.BYTE),
-        ('BatteryLifeTime', wintypes.DWORD),
-        ('BatteryFullLifeTime', wintypes.DWORD),
-    ]
+c = wmi.WMI()
+t = wmi.WMI(moniker = "//./root/wmi")
 
-# def f_statusInit():
-SYSTEM_POWER_STATUS_P = ctypes.POINTER(SYSTEM_POWER_STATUS)
-GetSystemPowerStatus = ctypes.windll.kernel32.GetSystemPowerStatus
-GetSystemPowerStatus.argtypes = [SYSTEM_POWER_STATUS_P]
-GetSystemPowerStatus.restype = wintypes.BOOL
-status = SYSTEM_POWER_STATUS()
-if not GetSystemPowerStatus(ctypes.pointer(status)):
-    raise ctypes.WinError()
+batts1 = c.CIM_Battery(Caption = 'Portable Battery')
+
+for i, b in enumerate(batts1):
+    print( 'Battery %d Design Capacity: %d mWh' % (i, b.DesignCapacity or 0) )
 
 
 
-def f_printBF() :
-    """
-    banniere realise depuis le site :
-    http://www.network-science.de/ascii/
-    """
-    system("cls")
-    print("\n\n")
-    print("\t######                                         ")
-    print("\t#     #   ##   ##### ##### ###### #####  #   # ")
-    print("\t#     #  #  #    #     #   #      #    #  # #  ")
-    print("\t######  #    #   #     #   #####  #    #   #   ")
-    print("\t#     # ######   #     #   #      #####    #   ")
-    print("\t#     # #    #   #     #   #      #   #    #   ")
-    print("\t######  #    #   #     #   ###### #    #   #   ")
-    print("\t                                               ")
-    print("\t         #######                               ")
-    print("\t         #       #    # #      #               ")
-    print("\t         #       #    # #      #               ")
-    print("\t         #####   #    # #      #               ")
-    print("\t         #       #    # #      #               ")
-    print("\t         #       #    # #      #               ")
-    print("\t         #        ####  ###### ######          ")
-    print("\n\n")
 
-    print ('ACLineStatus', status.ACLineStatus)
-    print ('BatteryFlag', status.BatteryFlag)
-    print ('BatteryLifePercent', status.BatteryLifePercent, " - type : ", type(status.BatteryLifePercent))
-    print ('BatteryLifeTime', status.BatteryLifeTime)
-    print ('BatteryFullLifeTime', status.BatteryFullLifeTime)
+def f_batInfo () :
+
+    v_batFull = False
+    batts = t.ExecQuery('Select * from BatteryFullChargedCapacity')
+    for i, b in enumerate(batts):
+        v_batFull = b.FullChargedCapacity
+        print( ('Battery %d Fully Charged Capacity: %d mWh' % 
+              (i, b.FullChargedCapacity)) )
+
+    batts = t.ExecQuery('Select * from BatteryStatus where Voltage > 0')
+
+    for i, b in enumerate(batts):
+        print( '\nBattery %d ***************' % i )
+        print( 'Tag:               ' + str(b.Tag) )
+        print( 'Name:              ' + b.InstanceName )
+
+        print( 'PowerOnline:       \t' + str(b.PowerOnline) )
+        print( 'Discharging:       \t' + str(b.Discharging) )
+        print( 'Charging:          \t' + str(b.Charging) )
+        print( 'Voltage:           \t' + str(b.Voltage) )
+        print( 'DischargeRate:     \t' + str(b.DischargeRate) )
+        print( 'ChargeRate:        \t' + str(b.ChargeRate) )
+        print( 'RemainingCapacity: \t', b.RemainingCapacity)
+        print( 'Active:            \t' + str(b.Active) )
+        print( 'Critical:          \t' + str(b.Critical) )
+        print( (b.RemainingCapacity*100) /v_batFull )
+
+# def f_printBF() :
+    # """
+    # banniere realise depuis le site :
+    # http://www.network-science.de/ascii/
+    # """
+    # system("cls")
+    # print("\n\n")
+    # print("\t######                                         ")
+    # print("\t#     #   ##   ##### ##### ###### #####  #   # ")
+    # print("\t#     #  #  #    #     #   #      #    #  # #  ")
+    # print("\t######  #    #   #     #   #####  #    #   #   ")
+    # print("\t#     # ######   #     #   #      #####    #   ")
+    # print("\t#     # #    #   #     #   #      #   #    #   ")
+    # print("\t######  #    #   #     #   ###### #    #   #   ")
+    # print("\t                                               ")
+    # print("\t         #######                               ")
+    # print("\t         #       #    # #      #               ")
+    # print("\t         #       #    # #      #               ")
+    # print("\t         #####   #    # #      #               ")
+    # print("\t         #       #    # #      #               ")
+    # print("\t         #       #    # #      #               ")
+    # print("\t         #        ####  ###### ######          ")
+    # print("\n\n")
+
+
 
 def main() :
-    # print("dbgMsg : status.BatteryLifePercent : ",status.BatteryLifePercent)
-    if (status.ACLineStatus) and (status.BatteryLifePercent >= 98) :
-        f_printBF()
-        input("\nappuyer sur entree pour fermer la fenetre")
+    f_batInfo()
 
 
 if __name__ == '__main__':
