@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     batteryStatus.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161205
+   :Version:            20161206
 
 ----
 
@@ -31,9 +31,9 @@ lexique
 """
 #################### Taille maximum des commentaires (90 caracteres)######################
 
-# Get power status of the system using ctypes to call GetSystemPowerStatus
+# Getting Battery Capacity Windows with Python
 
-# source : http://stackoverflow.com/questions/6153860/in-python-how-can-i-detect-whether-the-computer-is-on-battery-power
+# source : http://stackoverflow.com/questions/16380394/getting-battery-capacity-windows-with-python
 
 from os import system
 import wmi
@@ -55,26 +55,25 @@ def f_batInfo () :
     batts = t.ExecQuery('Select * from BatteryFullChargedCapacity')
     for i, b in enumerate(batts):
         v_batFull = b.FullChargedCapacity
-        print( ('Battery %d Fully Charged Capacity: %d mWh' % 
-              (i, b.FullChargedCapacity)) )
+        print( "Charged Capacity: {} mWh".format(v_batFull))
 
     batts = t.ExecQuery('Select * from BatteryStatus where Voltage > 0')
 
     for i, b in enumerate(batts):
-        print( '\nBattery %d ***************' % i )
-        print( 'Tag:               ' + str(b.Tag) )
-        print( 'Name:              ' + b.InstanceName )
+        # print( '\nBattery %d ***************' % i )
+        # print( 'Tag:               ' + str(b.Tag) )
+        print( "Name:               \t{}".format(b.InstanceName ))
 
-        print( 'PowerOnline:       \t' + str(b.PowerOnline) )
-        print( 'Discharging:       \t' + str(b.Discharging) )
-        print( 'Charging:          \t' + str(b.Charging) )
-        print( 'Voltage:           \t' + str(b.Voltage) )
-        print( 'DischargeRate:     \t' + str(b.DischargeRate) )
-        print( 'ChargeRate:        \t' + str(b.ChargeRate) )
-        print( 'RemainingCapacity: \t', b.RemainingCapacity)
-        print( 'Active:            \t' + str(b.Active) )
-        print( 'Critical:          \t' + str(b.Critical) )
-        print( (b.RemainingCapacity*100) /v_batFull )
+        print( "PowerOnline:        \t{}".format(b.PowerOnline) )
+        # print( 'Discharging:       \t', b.Discharging)
+        print( "Charging:           \t{}".format(b.Charging))
+        # print( 'Voltage:           \t', b.Voltage)
+        print( "DischargeRate:      \t{}".format(b.DischargeRate))
+        print( "ChargeRate:         \t{}".format(b.ChargeRate))
+        print( "RemainingCapacity:  \t{}".format(b.RemainingCapacity))
+        # print( 'Active:            \t', b.Active)
+        # print( 'Critical:          \t', b.Critical)
+        print( "ChargeLvel (%)      \t{}%".format(round(((b.RemainingCapacity*100) /v_batFull), 2 )))
 
 # def f_printBF() :
     # """
