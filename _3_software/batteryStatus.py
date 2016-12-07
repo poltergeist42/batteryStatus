@@ -2,34 +2,61 @@
 # -*- coding: utf-8 -*-
 
 """
-   :Nom du fichier:     batteryStatus.py
-   :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161207
 
-----
+Infos
+=====
+
+   :Nom du fichier:     fakeLib.py
+   :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
+   :Version:            20161112
+
+####
 
    :Licence:            CC-BY-NC-SA
    :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-----
+####
 
     :dev language:      Python 3.4
     
-----
+####
 
 lexique
--------
+=======
 
-   :v_:                 variable
-   :l_:                 list
-   :t_:                 tuple
-   :d_:                 dictionnaire
-   :f_:                 fonction
-   :C_:                 Class
-   :i_:                 Instance
-   :m_:                 Module
+   :**v_**:                 variable
+   :**l_**:                 list
+   :**t_**:                 tuple
+   :**d_**:                 dictionnaire
+   :**f_**:                 fonction
+   :**C_**:                 Class
+   :**i_**:                 Instance
+   :**m_**:                 Matrice
+   
+   
+####
+
+Liste des libs
+==============
+
+    - os
+    - wmi
+    - argparse
+    
+####
+   
+objectif
+========
+
+    BatteryStatus permet de controller le niveau de charge de la battery 
+    des ordinateur portables (sous environement Microsoft).
+    Lorsque le PC est complètement charger, un message apparait à l'écran pour nous
+    le signaler. On peut alors débrancher l'alimentation pour travailler sur la battery.
+    Cela permet de preserver la duree de vie de la battery.
+    
+####
+    
 """
-#################### Taille maximum des commentaires (90 caracteres)######################
 
 # Getting Battery Capacity Windows with Python
 
@@ -37,6 +64,7 @@ lexique
 
 from os import system
 import wmi
+import argparse
 
 c = wmi.WMI()
 t = wmi.WMI(moniker = "//./root/wmi")
@@ -47,11 +75,13 @@ for i, b in enumerate(batts1):
     print( 'Battery %d Design Capacity: %d mWh' % (i, b.DesignCapacity or 0) )
 
 
+
 class C_BatteryStatus( object ) :
     """
     """
-    def __ini__( self, v_levelChk = 100 ) :
+    def __init__( self, v_levelChk = 100 ) :
         """ initialisation des varraibles """
+            
         self.v_levelChk                 = v_levelChk
         self.v_FullChargedCapacity      = False
         self.InstanceName               = False
@@ -61,10 +91,28 @@ class C_BatteryStatus( object ) :
         self.ChargeRate                 = False
         self.RemainingCapacity          = False
         self.ChargeLvel                 = False
+        self.f_setBatteryValue()
         
+    def __del__( self ) :
+        """ **__del__()**
+        
+            Permet de terminer proprement l'instance de la Class courante
+        
+            il faut utilise : ::
+            
+                del [nom_de_l'_instance]
+                
+            *N.B :* Si l'instance n'est plus utilisee, cette methode est appellee 
+            automatiquement.
+        """
+        
+        ## Action
+        v_className = self.__class__.__name__
+       
 
     def f_setBatteryValue( self ) :
         """ Permet d'initialiser les variables de la batterie """
+        print( "petit poucet" )
         batts = t.ExecQuery('Select * from BatteryFullChargedCapacity')
                     # la methode : ExecQuery fait des requette SQL pour intéroger la base WMI
         for i, b in enumerate(batts):
@@ -99,38 +147,68 @@ class C_BatteryStatus( object ) :
         # print( 'Active:            \t', b.Active)
         # print( 'Critical:          \t', b.Critical)
         
+
+    def f_printBF(self) :
+        """
+        banniere realise depuis le site :
+        http://www.network-science.de/ascii/
+        """
+        system("cls")
+        print("\n\n")
+        print("\t######                                         ")
+        print("\t#     #   ##   ##### ##### ###### #####  #   # ")
+        print("\t#     #  #  #    #     #   #      #    #  # #  ")
+        print("\t######  #    #   #     #   #####  #    #   #   ")
+        print("\t#     # ######   #     #   #      #####    #   ")
+        print("\t#     # #    #   #     #   #      #   #    #   ")
+        print("\t######  #    #   #     #   ###### #    #   #   ")
+        print("\t                                               ")
+        print("\t         #######                               ")
+        print("\t         #       #    # #      #               ")
+        print("\t         #       #    # #      #               ")
+        print("\t         #####   #    # #      #               ")
+        print("\t         #       #    # #      #               ")
+        print("\t         #       #    # #      #               ")
+        print("\t         #        ####  ###### ######          ")
+        print("\n\n")
+
     def f_levelChk( self ) :
         """ Test si le taux de charge et supprérieur ou égal à la valeur de v_levelChk """
-
-def f_printBF() :
-    """
-    banniere realise depuis le site :
-    http://www.network-science.de/ascii/
-    """
-    system("cls")
-    print("\n\n")
-    print("\t######                                         ")
-    print("\t#     #   ##   ##### ##### ###### #####  #   # ")
-    print("\t#     #  #  #    #     #   #      #    #  # #  ")
-    print("\t######  #    #   #     #   #####  #    #   #   ")
-    print("\t#     # ######   #     #   #      #####    #   ")
-    print("\t#     # #    #   #     #   #      #   #    #   ")
-    print("\t######  #    #   #     #   ###### #    #   #   ")
-    print("\t                                               ")
-    print("\t         #######                               ")
-    print("\t         #       #    # #      #               ")
-    print("\t         #       #    # #      #               ")
-    print("\t         #####   #    # #      #               ")
-    print("\t         #       #    # #      #               ")
-    print("\t         #       #    # #      #               ")
-    print("\t         #        ####  ###### ######          ")
-    print("\n\n")
-
+        if self.ChargeLvel >= self.v_levelChk :
+            system("cls")
+            self.f_printBF()
+            self.f_printBatteryValue()
+            
+        else :
+            print( "{} - {}".format(self.ChargeLvel, self.v_levelChk))
 
 
 def main() :
-    f_batInfo()
+    v_helpSetLevel = """
+      Reglage du niveau de charge de la batterie.
+      Cette valeur permet de changer le niveau à surveiller.
+      Lorsqu'elle est atteinte, l'alerte se met en route.
+      Si cette option n'est pas séléctionné, le niveau par défaut est 100 %
+    """
+    
+    v_helpDbg = """ Cette option n'est pas implémentée pour le moment """
+      
+    
+    parser = argparse.ArgumentParser()
 
+    parser.add_argument( "-s", "--setlevel", type=int, help=v_helpSetLevel)
+    # parser.add_argument( "-d", "--debug", action='store_true', help=v_helpDbg)
+                        
+    args = parser.parse_args()
+    
+    if args.setlevel :
+        batt = C_BatteryStatus(v_levelChk = args.setlevel)
+        
+    else :
+        batt = C_BatteryStatus()
+        
+    batt.f_levelChk()
+    
 
 if __name__ == '__main__':
     main()
