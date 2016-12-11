@@ -28,7 +28,7 @@
     <link rel="search" title="Recherche" href="search.html" />
     <link rel="top" title="documentation batteryStatus 20161207" href="index.html" />
     <link rel="next" title="Bug et ToDo-list" href="Bug_TODOList.html" />
-    <link rel="prev" title="README_batteryStatus" href="README_batteryStatus.html" />
+    <link rel="prev" title="batteryStatus" href="README_batteryStatus.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -57,7 +57,7 @@
 </tr>
 <tr class="field-even field"><th class="field-name">Autheur:</th><td class="field-body"><a class="reference external" href="https://github.com/poltergeist42">Poltergeist42</a></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20161112</td>
+<tr class="field-odd field"><th class="field-name">Version:</th><td class="field-body">20161209</td>
 </tr>
 </tbody>
 </table>
@@ -122,6 +122,7 @@
 <div><ul class="simple">
 <li>os</li>
 <li>wmi</li>
+<li>argparse</li>
 </ul>
 </div></blockquote>
 </div>
@@ -137,11 +138,20 @@ Cela permet de preserver la duree de vie de la battery.</div></blockquote>
 <hr class="docutils" />
 <dl class="class">
 <dt id="_3_software.batteryStatus.C_BatteryStatus">
-<em class="property">class </em><code class="descclassname">_3_software.batteryStatus.</code><code class="descname">C_BatteryStatus</code><a class="headerlink" href="#_3_software.batteryStatus.C_BatteryStatus" title="Lien permanent vers cette définition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">_3_software.batteryStatus.</code><code class="descname">C_BatteryStatus</code><span class="sig-paren">(</span><em>v_levelChk=100</em><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.batteryStatus.C_BatteryStatus" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><dl class="method">
 <dt id="_3_software.batteryStatus.C_BatteryStatus.f_levelChk">
 <code class="descname">f_levelChk</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.batteryStatus.C_BatteryStatus.f_levelChk" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Test si le taux de charge et supprérieur ou égal à la valeur de v_levelChk</p>
+<p>Si la battery n&#8217;est plus en charge (not self.Charging) et que le PC est
+toujours relier à l&#8217;alimentation, le message s&#8217;affichera tous de même</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="_3_software.batteryStatus.C_BatteryStatus.f_printBF">
+<code class="descname">f_printBF</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.batteryStatus.C_BatteryStatus.f_printBF" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>banniere realise depuis le site :
+<a class="reference external" href="http://www.network-science.de/ascii/">http://www.network-science.de/ascii/</a></p>
 </dd></dl>
 
 <dl class="method">
@@ -159,10 +169,9 @@ Cela permet de preserver la duree de vie de la battery.</div></blockquote>
 </dd></dl>
 
 <dl class="function">
-<dt id="_3_software.batteryStatus.f_printBF">
-<code class="descclassname">_3_software.batteryStatus.</code><code class="descname">f_printBF</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.batteryStatus.f_printBF" title="Lien permanent vers cette définition">¶</a></dt>
-<dd><p>banniere realise depuis le site :
-<a class="reference external" href="http://www.network-science.de/ascii/">http://www.network-science.de/ascii/</a></p>
+<dt id="_3_software.batteryStatus.main">
+<code class="descclassname">_3_software.batteryStatus.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_3_software.batteryStatus.main" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Fonction principale</p>
 </dd></dl>
 
 </div>
@@ -188,7 +197,7 @@ Cela permet de preserver la duree de vie de la battery.</div></blockquote>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="README_batteryStatus.html" title="Chapitre précédent">README_batteryStatus</a></li>
+      <li>Previous: <a href="README_batteryStatus.html" title="Chapitre précédent">batteryStatus</a></li>
       <li>Next: <a href="Bug_TODOList.html" title="Chapitre suivant">Bug et ToDo-list</a></li>
   </ul></li>
 </ul>

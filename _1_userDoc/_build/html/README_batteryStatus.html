@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>README_batteryStatus &#8212; documentation batteryStatus 20161207</title>
+    <title>batteryStatus &#8212; documentation batteryStatus 20161207</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -44,8 +44,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="readme-batterystatus">
-<h1>README_batteryStatus<a class="headerlink" href="#readme-batterystatus" title="Lien permanent vers ce titre">¶</a></h1>
+  <div class="section" id="batterystatus">
+<h1>batteryStatus<a class="headerlink" href="#batterystatus" title="Lien permanent vers ce titre">¶</a></h1>
 <blockquote>
 <div><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -72,6 +72,61 @@ Lorsque le PC est complètement charger, un message apparait à l&#8217;écran p
 le signaler. On peut alors débrancher l&#8217;alimentation pour travailler sur la battery.
 Cela permet de preserver la duree de vie de la battery.</div></blockquote>
 </div>
+<div class="section" id="instructions">
+<h2>Instructions<a class="headerlink" href="#instructions" title="Lien permanent vers ce titre">¶</a></h2>
+<blockquote>
+<div><p>Pour utiliser cette apply il faut en créer une version standalone à l&#8217;aide de py2exe.</p>
+<blockquote>
+<div><ol class="arabic">
+<li><dl class="first docutils">
+<dt>Installer py2exe</dt>
+<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">py2exe</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><p class="first">Générer le fichier binaire</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Se placer dans :</dt>
+<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">_3_software</span><span class="o">/</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Ouvrir un terminal et executer la commande suivante</dt>
+<dd><div class="first highlight-default"><div class="highlight"><pre><span></span><span class="n">steup</span><span class="o">.</span><span class="n">py</span> <span class="n">py2exe</span>
+</pre></div>
+</div>
+<p class="last">Si tout c&#8217;est bien passé, un dossier nomé : &#8220;dist&#8221;
+doit avoir été créer.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Mettre en place la tache planifié</p>
+<blockquote>
+<div><ul class="simple">
+<li>Créer une nouvelle tache planifier</li>
+<li>selectionner ouvrir une application puis choisissez l&#8217;application &#8220;batteryStatus.exe&#8221;
+qui se trouve dans le dossier &#8220;dist&#8221;</li>
+<li>choisissez une periode (tous les jours) puis dans les propriétés avancées,
+choisissez une fréquences d&#8217;execution toutes les 5 ou 15 minutes</li>
+<li>Valider et attendez. Lorsque votre battery sera complétement chargée,
+un message apparaitra sur votre ecran.</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+</div>
 </div>
 
 
@@ -82,8 +137,9 @@ Cela permet de preserver la duree de vie de la battery.</div></blockquote>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table des Matières</a></h3>
   <ul>
-<li><a class="reference internal" href="#">README_batteryStatus</a><ul>
+<li><a class="reference internal" href="#">batteryStatus</a><ul>
 <li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#instructions">Instructions</a></li>
 </ul>
 </li>
 </ul>

@@ -1,13 +1,11 @@
 ## [ .gitignore ]
 
 ## Liste des fichiers et dossiers à ignorer
+Thumbs.db
 
 #.gitignore
 
 ## [ Dossiers a ignorer ]
-_3_software/_3-1_test/
-_3_software/__pycache__/
-_3_software/dist/
 _5_*/
 _6_*/
 _7_*/
@@ -19,4 +17,3 @@ _7_*/
 *.264
 *.mkv
 *.mp4
-Thumbs.db

@@ -8,7 +8,7 @@ Infos
 
    :Nom du fichier:     fakeLib.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20161112
+   :Version:            20161209
 
 ####
 
@@ -112,7 +112,7 @@ class C_BatteryStatus( object ) :
 
     def f_setBatteryValue( self ) :
         """ Permet d'initialiser les variables de la batterie """
-        print( "petit poucet" )
+        # print( "petit poucet" )
         batts = t.ExecQuery('Select * from BatteryFullChargedCapacity')
                     # la methode : ExecQuery fait des requette SQL pour intéroger la base WMI
         for i, b in enumerate(batts):
@@ -173,35 +173,45 @@ class C_BatteryStatus( object ) :
         print("\n\n")
 
     def f_levelChk( self ) :
-        """ Test si le taux de charge et supprérieur ou égal à la valeur de v_levelChk """
-        if self.ChargeLvel >= self.v_levelChk :
+        """ Test si le taux de charge et supprérieur ou égal à la valeur de v_levelChk
+            
+            Si la battery n'est plus en charge (not self.Charging) et que le PC est
+            toujours relier à l'alimentation, le message s'affichera tous de même
+        """
+        if (    (self.PowerOnline and (self.ChargeLvel >= self.v_levelChk)) 
+                or ( self.PowerOnline and not self.Charging )) :
             system("cls")
             self.f_printBF()
             self.f_printBatteryValue()
-            
+            input("\n\t Appuyer sur une touche pour fermer la fenêtre")
+
         else :
             print( "{} - {}".format(self.ChargeLvel, self.v_levelChk))
 
 
 def main() :
+    """ Fonction principale """
+    
     v_helpSetLevel = """
-      Reglage du niveau de charge de la batterie.
-      Cette valeur permet de changer le niveau à surveiller.
-      Lorsqu'elle est atteinte, l'alerte se met en route.
-      Si cette option n'est pas séléctionné, le niveau par défaut est 100 %
+    Reglage du niveau de charge de la batterie.
+    Cette valeur permet de changer le niveau a surveiller.
+    Lorsqu'elle est atteinte, l'alerte se met en route.
+    Si cette option n'est pas selectionne, le niveau par defaut est 100 %
     """
     
-    v_helpDbg = """ Cette option n'est pas implémentée pour le moment """
+    # v_helpDbg = """ Cette option n'est pas implementee pour le moment """
       
     
     parser = argparse.ArgumentParser()
-
-    parser.add_argument( "-s", "--setlevel", type=int, help=v_helpSetLevel)
-    # parser.add_argument( "-d", "--debug", action='store_true', help=v_helpDbg)
+    
+    parser.add_argument( "-d", "--debug", action='store_true', help="Cette option n'est pas implementee pour le moment")
+    # parser.add_argument( "-S", "--setlevel", type=int, help=v_helpSetLevel)
+    parser.add_argument( "-S", "--setlevel", help=v_helpSetLevel)
                         
     args = parser.parse_args()
     
     if args.setlevel :
+        int(args.setlevel)
         batt = C_BatteryStatus(v_levelChk = args.setlevel)
         
     else :
