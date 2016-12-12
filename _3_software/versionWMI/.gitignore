@@ -1,0 +1,23 @@
+## [ .gitignore ]
+
+## Liste des fichiers et dossiers à ignorer
+Thumbs.db
+setup.py
+
+#.gitignore
+
+## [ Dossiers a ignorer ]
+_3_software/_3-1_test/
+_3_software/versionWMI/__pycache__/
+_3_software/versionWMI/dist/*
+_5_*/
+_6_*/
+_7_*/
+*_v/
+
+## [ listes des extentions a ignorer ]
+*.*~
+*.FCStd1
+*.264
+*.mkv
+*.mp4

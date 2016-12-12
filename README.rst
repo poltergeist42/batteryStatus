@@ -18,10 +18,10 @@ Description
     le signaler. On peut alors débrancher l'alimentation pour travailler sur la battery.
     Cela permet de preserver la duree de vie de la battery.
     
-Instructions
-============
+Instructions pour la version Ctypes
+===================================
 
-    Pour utiliser cette apply il faut en créer une version standalone à l'aide de py2exe.
+Pour utiliser cette apply il faut en créer une version standalone à l'aide de py2exe.
     
         #. Installer py2exe
             ::
@@ -50,5 +50,19 @@ Instructions
               qui se trouve dans le dossier "dist"
             * choisissez une periode (tous les jours) puis dans les propriétés avancées,
               choisissez une fréquences d'execution toutes les 5 ou 15 minutes
+            * Valider et attendez. Lorsque votre battery sera complétement chargée,
+              un message apparaitra sur votre ecran.
+              
+Instructions pour la version WMI
+================================
+
+Cette version nécessite que python soit installer et renseigné dans le path de la machine
+               
+        #. Mettre en place la tache planifié
+        
+            * Créer une nouvelle tache planifier
+            * selectionner ouvrir une application puis choisissez le script "runIt.bat"
+            * choisissez une periode (tous les jours) puis dans les propriétés avancées,
+              choisissez une fréquences d'execution toutes les 5, 15 ou 20 minutes
             * Valider et attendez. Lorsque votre battery sera complétement chargée,
               un message apparaitra sur votre ecran.
